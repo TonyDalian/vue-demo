@@ -37,10 +37,11 @@ new Vue({
 	el: '#app',
 	store,
 	router,
+	...App
 	/*render: h => h(App)*/
 	
-	template: '<App/>',
-	components: { App }
+	// template: '<App/>',
+	// components: { App }
 })
 
 

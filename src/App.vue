@@ -2,7 +2,8 @@
   <div id="app">
    <!--  <img src="./assets/logo.png">
    <h1>Hello App!</h1> -->
-   
+    <v-loading v-show="loading"></v-loading>
+
     <v-header :title="title" :menu-display="menuDisplay" :back-display="backDisplay" :map-display="mapDisplay"></v-header>
     <div class="content" :class="{tabar: tabar}">
             <transition name="slide-left">
@@ -10,7 +11,7 @@
             </transition>  
     </div>
     <v-tabar></v-tabar>
-
+    <v-sidebar></v-sidebar>
 
     <!-- use router-link component for navigation. -->
     <!-- specify the link by passing the `to` prop. -->
@@ -27,20 +28,39 @@
 <script>
 import tabar from '@/components/tabar'
 import header from '@/components/header'
+import sidebar from '@/components/sidebar'
+import loading from '@/components/loading'
 
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'app',
   components: {
     'v-tabar': tabar,
-    'v-header': header
+    'v-header': header,
+    'v-sidebar': sidebar,
+    'v-loading': loading,
   },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  watch: {
+      // 如果路由有变化，会再次执行该方法
+      '$route': 'hideMenuSlide'
+  },
+  methods: {
+      ...mapActions({ setNavState: 'setNavState' }),
+      // 隐藏MenuSlide
+      hideMenuSlide() {
+        this.setNavState(false)
+      }
+  },
   computed: {
+    ...mapGetters([
+       'loading'
+    ]),
     title () {
           switch (this.$route.path.split('/')[1]) {
               case '':
