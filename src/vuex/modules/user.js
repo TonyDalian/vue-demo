@@ -39,7 +39,8 @@ const actions = {
         api.UserInfo(id)
             .then(res => {
                 commit(types.COM_LOADING_STATUS, false)
-                commit(types.GET_USER_DATA, res.data)
+                console.log(res);
+               // commit(types.GET_USER_DATA, res.id)
             })
     }
 }

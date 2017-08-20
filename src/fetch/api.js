@@ -6,7 +6,7 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://localhost:4000/';
+axios.defaults.baseURL = 'http://localhost:8000/';
 
 //POST传参序列化
 axios.interceptors.request.use((config) => {
@@ -32,17 +32,34 @@ axios.interceptors.response.use((res) =>{
 });
 
 export function fetch(url, params) {
-    return new Promise((resolve, reject) => {
-        axios.post(url, params)
-            .then(response => {
-                resolve(response.data);
-            }, err => {
-                reject(err);
+    if(params!=null){
+          return new Promise((resolve, reject) => {
+            axios.post(url, params)
+                .then(response => {
+                    resolve(response.data);
+                }, err => {
+                    reject(err);
+                })
+                .catch((error) => {
+                   reject(error)
+                })
             })
-            .catch((error) => {
-               reject(error)
-            })
-    })
+    }else{
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(response => {
+                    resolve(response.data);
+                }, err => {
+                    reject(err);
+                })
+                .catch((error) => {
+                   reject(error)
+                })
+            }).catch(function(err){
+                   console.log(err);
+            });
+    }
+   
 }
 
 export default {
@@ -64,7 +81,14 @@ export default {
      * 获取用户信息
      */
     UserInfo(id) {
-        return fetch('/users/api/userInfo', {userId: id})
+       
+        return fetch('/api/persons/detail/'+id)
+    
+                // axios.get('http://127.0.0.1:8000/api/persons/detail/1').then((response) => {
+                //    console.log(response.data);
+                // }).catch(function (response) {
+                //     console.log(response)
+                // });
     },
 
 

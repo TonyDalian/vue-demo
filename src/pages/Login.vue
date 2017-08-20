@@ -47,7 +47,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions({ setUserInfo: 'setUserInfo' }),
+        ...mapActions({ getUserData: '1' }),
 
         // 用户登录
         _login() {
@@ -59,20 +59,20 @@ export default {
                 username: this.username,
                 password: this.password
             }
-            this.$store.dispatch('setLoadingState', true)
-            api.Login(data)
-                .then(res => {
-                    console.log(res)
-                    if(res.success) {
-                        // let userInfo = Object.assign()
-                        this.$store.dispatch('setLoadingState', false)
-                        this.setUserInfo(res.data)
-                        this.$router.replace('/home')
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            this.$store.dispatch('getUserData', '1')
+            // api.Login(data)
+            //     .then(res => {
+            //         console.log(res)
+            //         if(res.success) {
+            //             // let userInfo = Object.assign()
+            //             this.$store.dispatch('setLoadingState', false)
+            //             this.setUserInfo(res.data)
+            //             this.$router.replace('/home')
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     })
         }
     }
 }
